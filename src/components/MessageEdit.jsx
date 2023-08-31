@@ -10,30 +10,23 @@ const MessageEdit = ({ fetchMessageData, message }) => {
   };
 
   const handleEditClick = async () => {
-    try {
-      console.log('Edited Text:', editedText); // Check if editedText is correct
-      const response = await fetch(`${API}/message/${message.id}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          text: editedText,
-        }),
-      });
+    console.log('Edited Text:', editedText); // Check if editedText is correct
+    const response = await fetch(`${API}/message/${message.id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        text: editedText,
+      }),
+    });
 
-      console.log('Response:', response); // Check the response from the API
+    const info = await response.json();
 
-      const info = await response.json();
-      console.log('Info:', info); // Check the info object from the response
-
-      if (info.success) {
-        console.log('Edit Success'); // Check if this block is being executed
-        fetchMessageData();
-        setIsEditing(false);
-      }
-    } catch (error) {
-      console.error('Error editing message:', error);
+    if (info.success) {
+      console.log('Edit Success'); // Check if this block is being executed
+      fetchMessageData();
+      setIsEditing(false);
     }
   };
 
