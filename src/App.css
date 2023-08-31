@@ -1,0 +1,30 @@
+.flex-container {
+  display: flex;
+}
+.icon-container {
+  display: flex; /* or display: block; if you want buttons on separate lines */
+  align-items: flex-start; /* or align-items: center; if needed */
+}
+.flex-container,
+.icon-container {
+  gap: 5px;
+  margin-top: 10px;
+}
+
+.message-container {
+  margin: 1rem;
+  box-shadow: #00000059 0 5px 15px;
+  border-radius: 1rem;
+  padding: 1.5rem;
+}
+
+.message-content {
+  display: flex;
+  align-items: center;
+}
+
+.button-emoji {
+  height: 50px;
+  border: none;
+  cursor: pointer;
+}
