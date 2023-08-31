@@ -1,74 +1,72 @@
-// import React, { useState } from 'react';
-// import IconContainer from './IconContainer';
+import React, { useState } from 'react';
+import { API } from '../api';
 
-// const MessageEdit = ({ API, fetchMessageData, message }) => {
-//   const [editedText, setEditedText] = useState(message.text);
-//   const [isEditing, setIsEditing] = useState(false);
+const MessageEdit = ({ fetchMessageData, message }) => {
+  const [editedText, setEditedText] = useState(message.text);
+  const [isEditing, setIsEditing] = useState(false);
 
-//   const handleEditChange = (e) => {
-//     setEditedText(e.target.value);
-//   };
+  const handleEditChange = (e) => {
+    setEditedText(e.target.value); // Update the editedText state as the user types
+  };
 
-//   const handleSaveClick = async () => {
-//     try {
-//       const response = await fetch(`${API}/messages/${message.id}`, {
-//         method: 'PUT',
-//         headers: {
-//           'Content-Type': 'application/json',
-//         },
-//         body: JSON.stringify({
-//           text: editedText,
-//         }),
-//       });
+  const handleEditClick = async () => {
+    try {
+      console.log('Edited Text:', editedText); // Check if editedText is correct
+      const response = await fetch(`${API}/message/${message.id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          text: editedText,
+        }),
+      });
 
-//       const info = await response.json();
-//       if (info.success) {
-//         fetchMessageData();
-//         setIsEditing(false);
-//       }
-//     } catch (error) {
-//       console.error('Error editing message:', error);
-//     }
-//   };
+      console.log('Response:', response); // Check the response from the API
 
-//   const handleCancelClick = () => {
-//     setIsEditing(false);
-//   };
+      const info = await response.json();
+      console.log('Info:', info); // Check the info object from the response
 
-//   const toggleEdit = () => {
-//     setIsEditing(!isEditing);
-//   };
+      if (info.success) {
+        console.log('Edit Success'); // Check if this block is being executed
+        fetchMessageData();
+        setIsEditing(false);
+      }
+    } catch (error) {
+      console.error('Error editing message:', error);
+    }
+  };
 
-//   return (
-//     <div className="message-container">
-//       <div className="flex-container">
-//         {isEditing ? (
-//           <>
-//             <input
-//               type="text"
-//               value={editedText}
-//               onChange={handleEditChange}
-//               readOnly={!isEditing}
-//             />
-//             <button onClick={handleSaveClick} className="button-emoji">
-//               Save
-//             </button>
-//             <button onClick={handleCancelClick} className="button-emoji">
-//               Cancel
-//             </button>
-//           </>
-//         ) : (
-//           <>
-//             <p>{message.text}</p>
-//             <button className="button-emoji" onClick={toggleEdit}>
-//               ✏️
-//             </button>
-//           </>
-//         )}
-//       </div>
-//       <IconContainer message={message} />
-//     </div>
-//   );
-// };
+  const handleCancelClick = () => {
+    setIsEditing(false); // Close the edit mode on cancel
+  };
 
-// export default MessageEdit;
+  const toggleEdit = () => {
+    setIsEditing(!isEditing);
+  };
+
+  return (
+    <div className="flex-container">
+      {isEditing ? (
+        <>
+          <input type="text" value={editedText} onChange={handleEditChange} />
+          <button onClick={handleEditClick} className="button-emoji">
+            Edit
+          </button>
+          <button onClick={handleCancelClick} className="button-emoji">
+            Cancel
+          </button>
+        </>
+      ) : (
+        <>
+          <p>{message.text}</p>
+          <button className="button-emoji" onClick={toggleEdit}>
+            ✏️
+          </button>
+        </>
+      )}
+    </div>
+  );
+};
+
+export default MessageEdit;

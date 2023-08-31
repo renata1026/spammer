@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { API } from '../api';
 import Message from './Message';
+// import MessageEdit from './MessageEdit';
 import MessageList from './MessageList';
 
 const MessageFetch = () => {
@@ -22,6 +23,7 @@ const MessageFetch = () => {
         body: JSON.stringify({ text: newMessage }),
       });
       const info = await response.json();
+      console.log(info);
       if (info.success) {
         // Update the messageData state to include the new message
         setMessageData((prevMessageData) => [

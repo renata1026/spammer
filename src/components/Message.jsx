@@ -1,28 +1,47 @@
+/// Message.jsx
 import React, { useState } from 'react';
+import { API } from '../api';
 
-const Message = ({ onMessageSubmit }) => {
+const Message = ({ fetchMessageData }) => {
   const [inputValue, setInputValue] = useState('');
 
   const handleInputChange = (e) => {
     setInputValue(e.target.value);
   };
 
-  const handleFormSubmit = (e) => {
+  const handleFormSubmit = async (e) => {
     e.preventDefault();
-    onMessageSubmit(inputValue);
-    setInputValue('');
+    try {
+      const response = await fetch(`${API}/messages`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ text: inputValue }),
+      });
+
+      const info = await response.json();
+      if (info.success) {
+        fetchMessageData();
+        setInputValue('');
+      }
+    } catch (error) {
+      console.error('Error posting new message:', error);
+    }
   };
 
   return (
-    <form onSubmit={handleFormSubmit}>
-      <input
-        onChange={handleInputChange}
-        type="text"
-        value={inputValue}
-        placeholder="What's your message?"
-      />
-      <button type="submit">Post Message</button>
-    </form>
+    <div>
+      <form onSubmit={handleFormSubmit}>
+        <input
+          onChange={handleInputChange}
+          type="text"
+          value={inputValue}
+          placeholder="What's your message?"
+        />
+        <button type="submit">Post Message</button>
+      </form>
+    </div>
   );
 };
 

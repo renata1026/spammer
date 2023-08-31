@@ -1,19 +1,18 @@
 import React from 'react';
-import MessageFetch from './MessageFetch';
-import Message from './Message';
+import MessageEdit from './MessageEdit';
 
-const MessageList = ({ messageData }) => {
-  console.log(messageData);
+const MessageList = ({ messageData, fetchMessageData }) => {
   return (
     <div>
       {messageData.map((message) => (
         <div key={message.id} className="message">
           <div className="message-container">
             <div className="flex-container">
-              <p>{message.text}</p>
-              <button className="button-emoji">✏️</button>
+              <MessageEdit
+                message={message}
+                fetchMessageData={fetchMessageData}
+              />
             </div>
-
             <div className="icon-container">
               <button className="button-emoji">↩️</button>
               <div>

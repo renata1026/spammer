@@ -1,13 +1,36 @@
-import React from 'react';
 import './App.css';
-import MessageFetch from './components/MessageFetch';
+import React, { useEffect, useState } from 'react';
+import { API } from './api';
 
-function App() {
+import Message from './components/Message';
+import MessageList from './components/MessageList';
+
+const App = () => {
+  const [messageData, setMessageData] = useState([]);
+
+  const fetchMessageData = async () => {
+    try {
+      const response = await fetch(`${API}/messages`);
+      const info = await response.json();
+      setMessageData(info.messages);
+    } catch (error) {
+      console.error('Error fetching messages:', error);
+    }
+  };
+
+  useEffect(() => {
+    fetchMessageData();
+  }, []);
+
   return (
-    <div className="App">
-      <MessageFetch />
+    <div>
+      <Message fetchMessageData={fetchMessageData} />
+      <MessageList
+        messageData={messageData}
+        fetchMessageData={fetchMessageData}
+      />
     </div>
   );
-}
+};
 
 export default App;
