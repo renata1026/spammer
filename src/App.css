@@ -81,6 +81,7 @@ post-button:hover {
 
 .reply-container {
   background-color: #f0f0f0;
+  width: 60%;
   padding: 20px;
   border-radius: 8px;
 }
