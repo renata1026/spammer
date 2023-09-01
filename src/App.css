@@ -60,7 +60,8 @@ input {
 }
 
 /* Cute button */
-.post-button {
+.post-button,
+.reply-button {
   background-color: #ff6600;
   margin-left: 1em;
   border: none;
@@ -72,6 +73,29 @@ input {
   transition: background-color 0.2s ease-in-out;
 }
 
-.post-button:hover {
+.reply-button,
+post-button:hover {
   background-color: #ff4500; /* Darker color on hover */
+}
+/* Example CSS styles */
+
+.reply-container {
+  background-color: #f0f0f0;
+  padding: 20px;
+  border-radius: 8px;
+}
+
+.reply-form {
+  margin-bottom: 10px;
+}
+
+.reply-message {
+  background-color: #e0e0e0;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 4px;
+}
+
+.reply-message p {
+  margin: 0;
 }

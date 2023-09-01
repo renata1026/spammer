@@ -39,34 +39,36 @@ const ReplyMessage = () => {
   };
 
   return (
-    <div>
+    <div className="reply-container">
       {isReplying ? (
-        <form onSubmit={handleFormReplySubmit} className="reply">
+        <form onSubmit={handleFormReplySubmit} className="reply-form">
           <input
             onChange={handleReplyOnChange}
             type="text"
             value={reply}
             placeholder="Your reply"
           />
-          <button type="submit" className="button-emoji reply">
+          <button type="submit" className="button-emoji reply-button">
             Submit
           </button>
         </form>
       ) : (
-        <div>
+        <div className="reply-message">
           <p>{reply}</p>
           <button
             onClick={() => setIsReplying(true)}
-            className="button-emoji reply"
+            className="button-emoji reply-button"
           >
             ↩️
           </button>
         </div>
       )}
-      {/* Render reply messages */}
 
-      {replyMessage.map((reply) => (
-        <div key={reply.id}>{reply.text}</div>
+      {/* Render reply messages */}
+      {replyMessage.map((message) => (
+        <div key={message.id} className="reply-message">
+          <p>{message.text}</p>
+        </div>
       ))}
     </div>
   );
