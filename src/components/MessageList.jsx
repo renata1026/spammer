@@ -1,11 +1,12 @@
 import React from 'react';
 import { useState } from 'react';
 import EditMessage from './EditMessage';
+import LikeMessage from './LikeMessage';
 import DeleteMessage from './DeleteMessage';
 import PostMessage from './PostMessage';
 import { API } from '../api';
 
-const MessageList = ({ messageData, fetchMessageData, handleDelete }) => {
+const MessageList = ({ messageData, fetchMessageData }) => {
   console.log(messageData);
   console.log(fetchMessageData);
 
@@ -22,9 +23,10 @@ const MessageList = ({ messageData, fetchMessageData, handleDelete }) => {
             </div>
             <div className="icon-container">
               <button className="button-emoji">↩️</button>
-              <div>
-                <button className="button-emoji">👍0</button>
-              </div>
+              <LikeMessage
+                messageId={message.id}
+                fetchMessageData={fetchMessageData}
+              />
               <DeleteMessage
                 messageId={message.id}
                 fetchMessageData={fetchMessageData}
