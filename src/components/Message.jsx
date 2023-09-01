@@ -32,6 +32,7 @@ const Message = ({ fetchMessageData }) => {
 
   return (
     <div>
+      <h1>Spammer</h1>
       <form onSubmit={handleFormSubmit}>
         <input
           onChange={handleInputChange}
@@ -39,7 +40,9 @@ const Message = ({ fetchMessageData }) => {
           value={inputValue}
           placeholder="What's your message?"
         />
-        <button type="submit">Post Message</button>
+        <button className="post-button" type="submit">
+          Post Message
+        </button>
       </form>
     </div>
   );

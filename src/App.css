@@ -1,30 +1,77 @@
+h1 {
+  text-align: center;
+}
+
+/* Flex containers for layout */
 .flex-container {
   display: flex;
-}
-.icon-container {
-  display: flex; /* or display: block; if you want buttons on separate lines */
-  align-items: flex-start; /* or align-items: center; if needed */
-}
-.flex-container,
-.icon-container {
   gap: 5px;
   margin-top: 10px;
 }
 
-.message-container {
-  margin: 1rem;
-  box-shadow: #00000059 0 5px 15px;
-  border-radius: 1rem;
-  padding: 1.5rem;
+.icon-container {
+  display: flex;
+  align-items: flex-start;
+  gap: 5px;
+  margin-top: 10px;
 }
 
+/* Message container */
+.message-container {
+  margin: 1rem;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  border-radius: 1rem;
+  padding: 1.5rem;
+  background-color: #fff; /* Adjust as needed */
+}
+
+/* Message content */
 .message-content {
   display: flex;
   align-items: center;
 }
 
+/* Button emoji */
 .button-emoji {
-  height: 50px;
+  background-color: transparent;
   border: none;
+  outline: none;
   cursor: pointer;
+  height: 50px;
+  font-size: 24px;
+  color: #333;
+  transition: color 0.2s ease-in-out;
+}
+
+.button-emoji:hover {
+  color: #ff6600; /* Change color on hover */
+}
+
+/* Input box */
+input {
+  margin-top: 50px;
+  border: 2px solid #ccc;
+  border-radius: 20px;
+  padding: 10px;
+  width: 70%;
+  font-size: 16px;
+  outline: none;
+  margin-left: 1em;
+}
+
+/* Cute button */
+.post-button {
+  background-color: #ff6600;
+  margin-left: 1em;
+  border: none;
+  border-radius: 20px;
+  padding: 10px 20px;
+  font-size: 16px;
+  color: #fff;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.post-button:hover {
+  background-color: #ff4500; /* Darker color on hover */
 }

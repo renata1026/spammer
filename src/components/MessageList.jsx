@@ -1,5 +1,4 @@
 import React from 'react';
-import { useState } from 'react';
 import EditMessage from './EditMessage';
 import LikeMessage from './LikeMessage';
 import DeleteMessage from './DeleteMessage';
@@ -7,13 +6,13 @@ import PostMessage from './PostMessage';
 import { API } from '../api';
 
 const MessageList = ({ messageData, fetchMessageData }) => {
-  console.log(messageData);
-  console.log(fetchMessageData);
-
   return (
-    <div>
+    <div className="chat-container">
       {messageData.map((message) => (
-        <div key={message.id} className="message">
+        <div
+          key={message.id}
+          className={`message ${message.isSender ? 'sender' : 'receiver'}`}
+        >
           <div className="message-container">
             <div className="flex-container">
               <EditMessage
