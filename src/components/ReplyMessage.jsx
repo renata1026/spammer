@@ -1,34 +1,39 @@
 import React, { useState } from 'react';
 import { API } from '../api';
-import MessageList from './MessageList';
 
-const ReplyMessage = ({ message, messageId, fetchMessageData }) => {
+const ReplyMessage = () => {
   const [reply, setReply] = useState('');
   const [isReplying, setIsReplying] = useState(false);
-
-  const handleIsReplying = () => {
-    setIsReplying(!isReplying);
-  };
+  const [replyMessage, setReplyMessage] = useState([]);
 
   const handleReplyOnChange = (e) => {
     setReply(e.target.value);
   };
 
-  const formReplyOnSubmit = async (e) => {
+  const handleFormReplySubmit = async (e) => {
     e.preventDefault();
-    console.log('Form submitted');
-    console.log('Reply:', reply);
-    const response = await fetch(`${API}/message/${messageId}`, {
+
+    // Send the reply to the server
+
+    const response = await fetch(`${API}/messages`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({ text: reply }),
     });
+
     const info = await response.json();
+    console.log(info);
     if (info.success) {
-      fetchMessageData();
+      // Update the messageData state to include the new message
+      setReplyMessage((prevReplyMessage) => [
+        ...prevReplyMessage,
+        { id: info.id, text: reply },
+      ]);
+      // Reset the reply input
       setReply('');
+      // Close the reply form
       setIsReplying(false);
     }
   };
@@ -36,8 +41,13 @@ const ReplyMessage = ({ message, messageId, fetchMessageData }) => {
   return (
     <div>
       {isReplying ? (
-        <form onSubmit={formReplyOnSubmit} className="reply">
-          <input onChange={handleReplyOnChange} type="text" value={reply} />
+        <form onSubmit={handleFormReplySubmit} className="reply">
+          <input
+            onChange={handleReplyOnChange}
+            type="text"
+            value={reply}
+            placeholder="Your reply"
+          />
           <button type="submit" className="button-emoji reply">
             Submit
           </button>
@@ -45,11 +55,19 @@ const ReplyMessage = ({ message, messageId, fetchMessageData }) => {
       ) : (
         <div>
           <p>{reply}</p>
-          <button onClick={handleIsReplying} className="button-emoji reply">
-            ↩️ Reply
+          <button
+            onClick={() => setIsReplying(true)}
+            className="button-emoji reply"
+          >
+            ↩️
           </button>
         </div>
       )}
+      {/* Render reply messages */}
+
+      {replyMessage.map((reply) => (
+        <div key={reply.id}>{reply.text}</div>
+      ))}
     </div>
   );
 };
