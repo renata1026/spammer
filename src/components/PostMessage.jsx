@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { API } from '../api';
 import Message from './Message';
-// import MessageEdit from './MessageEdit';
+// import EditMessage from './EditMessage';
 import MessageList from './MessageList';
 
-const MessageFetch = () => {
+const PostMessage = () => {
   const [messageData, setMessageData] = useState([]);
 
   const fetchMessageData = async () => {
@@ -42,10 +42,13 @@ const MessageFetch = () => {
 
   return (
     <div>
-      <Message onMessageSubmit={handleNewMessage} />
-      <MessageList messageData={messageData} />
+      <Message fetchMessageData={fetchMessageData} />
+      <MessageList
+        messageData={messageData}
+        fetchMessageData={fetchMessageData}
+      />
     </div>
   );
 };
 
-export default MessageFetch;
+export default PostMessage;

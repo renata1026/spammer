@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { API } from '../api';
+import MessageList from './MessageList';
 
-const MessageEdit = ({ fetchMessageData, message }) => {
+const EditMessage = ({ fetchMessageData, message }) => {
   const [editedText, setEditedText] = useState(message.text);
   const [isEditing, setIsEditing] = useState(false);
 
@@ -62,4 +63,4 @@ const MessageEdit = ({ fetchMessageData, message }) => {
   );
 };
 
-export default MessageEdit;
+export default EditMessage;
