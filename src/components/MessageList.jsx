@@ -3,6 +3,7 @@ import EditMessage from './EditMessage';
 import LikeMessage from './LikeMessage';
 import DeleteMessage from './DeleteMessage';
 import PostMessage from './PostMessage';
+import ReplyMessage from './ReplyMessage';
 import { API } from '../api';
 
 const MessageList = ({ messageData, fetchMessageData }) => {
@@ -21,7 +22,11 @@ const MessageList = ({ messageData, fetchMessageData }) => {
               />
             </div>
             <div className="icon-container">
-              <button className="button-emoji">↩️</button>
+              <ReplyMessage
+                messageId={message.id}
+                message={message}
+                fetchMessageData={fetchMessageData}
+              />
               <LikeMessage
                 messageId={message.id}
                 fetchMessageData={fetchMessageData}
