@@ -21,12 +21,12 @@ const MessageList = ({ messageData, fetchMessageData }) => {
                 fetchMessageData={fetchMessageData}
               />
             </div>
+            <ReplyMessage
+              messageId={message.id}
+              message={message}
+              fetchMessageData={fetchMessageData}
+            />
             <div className="icon-container">
-              <ReplyMessage
-                messageId={message.id}
-                message={message}
-                fetchMessageData={fetchMessageData}
-              />
               <LikeMessage
                 messageId={message.id}
                 fetchMessageData={fetchMessageData}

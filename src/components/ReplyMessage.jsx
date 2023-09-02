@@ -39,7 +39,10 @@ const ReplyMessage = () => {
   };
 
   return (
-    <div className="reply-container">
+    <div
+      //   style={{ display: isReplying ? 'block' : 'none' }}
+      className="reply-container"
+    >
       <div className="reply-content">
         {isReplying ? (
           <form onSubmit={handleFormReplySubmit} className="reply-form">
@@ -50,18 +53,20 @@ const ReplyMessage = () => {
               placeholder="Your reply"
             />
             <button type="submit" className="button-emoji reply-button">
-              Submit
+              Reply
+            </button>
+            <button
+              style={{ display: isReplying ? 'block' : 'none' }}
+              onClick={() => setIsReplying(false)}
+              type="submit"
+              className="button-emoji reply-button"
+            >
+              Cancel
             </button>
           </form>
         ) : (
           <div className="reply-message">
             <p>{reply}</p>
-            <button
-              onClick={() => setIsReplying(true)}
-              className="button-emoji"
-            >
-              ↩️
-            </button>
           </div>
         )}
 
@@ -71,6 +76,17 @@ const ReplyMessage = () => {
             <p>{message.text}</p>
           </div>
         ))}
+      </div>
+
+      <div className="reply-button-container">
+        <button
+          style={{ display: isReplying ? 'none' : 'block' }}
+          onClick={() => setIsReplying(true)}
+          className="button-emoji"
+        >
+          ↩️
+        </button>
+        {/* Add reply button here */}
       </div>
     </div>
   );

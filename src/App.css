@@ -49,7 +49,6 @@ h1 {
 
 /* Input box */
 input {
-  margin-top: 50px;
   border: 2px solid #ccc;
   border-radius: 20px;
   padding: 10px;
@@ -80,21 +79,14 @@ post-button:hover {
 /* Example CSS styles */
 
 .reply-container {
-  background-color: #f0f0f0;
   width: 60%;
   padding: 20px;
   border-radius: 8px;
 }
 
 .reply-form {
+  display: flex;
   margin-bottom: 10px;
-}
-
-.reply-message {
-  background-color: #e0e0e0;
-  padding: 10px;
-  margin-bottom: 10px;
-  border-radius: 4px;
 }
 
 .reply-message p {
