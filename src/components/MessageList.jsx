@@ -4,6 +4,7 @@ import LikeMessage from './LikeMessage';
 import DeleteMessage from './DeleteMessage';
 import PostMessage from './PostMessage';
 import ReplyMessage from './ReplyMessage';
+
 import { API } from '../api';
 
 const MessageList = ({ messageData, fetchMessageData }) => {
@@ -21,11 +22,7 @@ const MessageList = ({ messageData, fetchMessageData }) => {
                 fetchMessageData={fetchMessageData}
               />
             </div>
-            <ReplyMessage
-              messageId={message.id}
-              message={message}
-              fetchMessageData={fetchMessageData}
-            />
+
             <div className="icon-container">
               <LikeMessage
                 messageId={message.id}
@@ -33,6 +30,11 @@ const MessageList = ({ messageData, fetchMessageData }) => {
               />
               <DeleteMessage
                 messageId={message.id}
+                fetchMessageData={fetchMessageData}
+              />
+              <ReplyMessage
+                messageId={message.id}
+                message={message}
                 fetchMessageData={fetchMessageData}
               />
             </div>
