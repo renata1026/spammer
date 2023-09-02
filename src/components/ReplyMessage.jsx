@@ -56,20 +56,13 @@ const ReplyMessage = () => {
             </button>
             <button
               onClick={toggleReplyForm}
-              type="button" // Change type to 'button' to prevent form submission
+              type="button"
               className="button-emoji reply-button"
             >
               Cancel
             </button>
           </form>
-        ) : (
-          <div className="reply-message">
-            <p>{reply}</p>
-            <button onClick={toggleReplyForm} className="button-emoji">
-              ↩️
-            </button>
-          </div>
-        )}
+        ) : null}
 
         {/* Render reply messages */}
         {replyMessage.map((message) => (
@@ -77,6 +70,27 @@ const ReplyMessage = () => {
             <p>{message.text}</p>
           </div>
         ))}
+
+        {/* Render reply input and button */}
+        {isReplying ? null : (
+          <div className="reply-message">
+            <p>{reply}</p>
+          </div>
+        )}
+
+        {/* Add a container below */}
+        <div className="reply-container-below">
+          {/* Add content to the container below */}
+        </div>
+
+        {/* Render the reply icon outside of the content */}
+        <button
+          style={{ display: isReplying ? 'none' : 'block' }}
+          onClick={toggleReplyForm}
+          className="button-emoji"
+        >
+          ↩️
+        </button>
       </div>
     </div>
   );
