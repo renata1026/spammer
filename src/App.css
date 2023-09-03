@@ -1,5 +1,22 @@
 h1 {
   text-align: center;
+  font-family: 'Comic Sans MS', cursive, sans-serif;
+  font-size: 36px;
+  color: #333;
+}
+
+body {
+  font-family: 'Calibri', sans-serif;
+  font-size: 16px;
+}
+form {
+  display: flex;
+  justify-content: center;
+}
+
+.wrapper {
+  margin: 20px 100px;
+  max-width: 1200px;
 }
 
 /* Flex containers for layout */
@@ -44,7 +61,8 @@ h1 {
 }
 
 .button-emoji:hover {
-  color: #ff6600; /* Change color on hover */
+  color: transparent;
+  text-shadow: 0 0 0 #ff4500; /* Change color on hover */
 }
 
 /* Input box */
@@ -56,27 +74,36 @@ input {
   font-size: 16px;
   outline: none;
   margin-left: 1em;
+  transition: border-color 0.2s ease-in-out;
 }
 
-/* Cute button */
+input:focus {
+  border-color: #ff6600; /* Highlight border on focus */
+}
+
 .post-button,
-.reply-button {
+.button {
   background-color: #ff6600;
   margin-left: 1em;
   border: none;
   border-radius: 20px;
+  width: 145px;
+  height: 40px;
   padding: 10px 20px;
   font-size: 16px;
   color: #fff;
   cursor: pointer;
-  transition: background-color 0.2s ease-in-out;
+  transition: background-color 0.2s ease-in-out, transform 0.2s ease-in-out;
 }
 
-.reply-button,
-post-button:hover {
-  background-color: #ff4500; /* Darker color on hover */
+.button:hover,
+.button:focus,
+.post-button:hover,
+.post-button:focus {
+  background-color: #ff4500;
+  color: #fff;
+  transform: scale(1.05); /* Slightly enlarge on hover */
 }
-/* Example CSS styles */
 
 .reply-container {
   width: 60%;
@@ -88,6 +115,19 @@ post-button:hover {
   margin-bottom: 10px;
 }
 
-.reply-message p {
+.reply-background {
+  display: flex;
+  flex-direction: column;
+  background: #ff8844;
+  border-radius: 10px;
+  padding: 30px;
+  margin-top: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  transition: background-color 0.3s;
+}
+
+.reply-background p {
   margin: 0;
+  font-size: 16px;
+  color: #333;
 }

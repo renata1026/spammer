@@ -44,10 +44,10 @@ const EditMessage = ({ fetchMessageData, message }) => {
       {isEditing ? (
         <>
           <input type="text" value={editedText} onChange={handleEditChange} />
-          <button onClick={handleEditClick} className="button-emoji">
+          <button onClick={handleEditClick} className="button-emoji button">
             Edit
           </button>
-          <button onClick={handleCancelClick} className="button-emoji">
+          <button onClick={handleCancelClick} className="button-emoji button">
             Cancel
           </button>
         </>

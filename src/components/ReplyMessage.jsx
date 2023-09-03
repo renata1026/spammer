@@ -1,20 +1,26 @@
 import React, { useState } from 'react';
 import { API } from '../api';
 
-const ReplyMessage = () => {
+const ReplyMessage = ({ fetchMessageData }) => {
   const [reply, setReply] = useState('');
+  const [replies, setReplies] = useState([]);
   const [isReplying, setIsReplying] = useState(false);
-  const [replyMessage, setReplyMessage] = useState([]);
+  const [background, setBackground] = useState(false);
 
   const handleReplyOnChange = (e) => {
     setReply(e.target.value);
   };
 
+  const toggleReplyForm = () => {
+    setBackground(!background);
+    setIsReplying(!isReplying);
+  };
+
   const handleFormReplySubmit = async (e) => {
     e.preventDefault();
+    toggleReplyForm();
 
     // Send the reply to the server
-
     const response = await fetch(`${API}/messages`, {
       method: 'POST',
       headers: {
@@ -26,23 +32,29 @@ const ReplyMessage = () => {
     const info = await response.json();
     console.log(info);
     if (info.success) {
-      // Update the replyMessage state to include the new message
-      setReplyMessage((prevReplyMessage) => [
-        ...prevReplyMessage,
-        { id: info.id, text: reply },
-      ]);
+      // Fetch updated message data after posting the reply
+      fetchMessageData();
       // Reset the reply input
       setReply('');
-    }
-  };
 
-  const toggleReplyForm = () => {
-    setIsReplying(!isReplying);
+      // Add the new reply to the replies array
+      setReplies((prevReplies) => [
+        ...prevReplies,
+        { id: info.id, text: reply },
+      ]);
+    }
   };
 
   return (
     <div className="reply-container">
       <div className="reply-content">
+        <button
+          style={{ display: isReplying ? 'none' : 'block' }}
+          onClick={toggleReplyForm}
+          className="button-emoji"
+        >
+          ↩️
+        </button>
         {isReplying ? (
           <form onSubmit={handleFormReplySubmit} className="reply-form">
             <input
@@ -52,16 +64,16 @@ const ReplyMessage = () => {
               placeholder="Your reply"
             />
             <button
-              onClick={toggleReplyForm}
+              style={{ display: isReplying ? 'block' : 'none' }}
               type="submit"
-              className="button-emoji reply-button"
+              className="button-emoji button"
             >
               Reply
             </button>
             <button
               onClick={toggleReplyForm}
               type="button"
-              className="button-emoji reply-button"
+              className="button-emoji button"
             >
               Cancel
             </button>
@@ -69,32 +81,14 @@ const ReplyMessage = () => {
         ) : null}
 
         {/* Render reply messages */}
-        {replyMessage.map((message) => (
-          <div key={message.id} className="reply-message">
-            <p>{message.text}</p>
+        {replies.map((reply) => (
+          <div
+            key={reply.id}
+            className={`reply-message ${background ? '' : 'reply-background'}`}
+          >
+            <p>{reply.text}</p>
           </div>
         ))}
-
-        {/* Render reply input and button */}
-        {isReplying ? null : (
-          <div className="reply-message">
-            <p>{reply}</p>
-          </div>
-        )}
-
-        {/* Add a container below */}
-        <div className="reply-container-below">
-          {/* Add content to the container below */}
-        </div>
-
-        {/* Render the reply icon outside of the content */}
-        <button
-          style={{ display: isReplying ? 'none' : 'block' }}
-          onClick={toggleReplyForm}
-          className="button-emoji"
-        >
-          ↩️
-        </button>
       </div>
     </div>
   );
