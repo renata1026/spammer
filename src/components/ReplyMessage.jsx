@@ -51,7 +51,11 @@ const ReplyMessage = () => {
               value={reply}
               placeholder="Your reply"
             />
-            <button type="submit" className="button-emoji reply-button">
+            <button
+              onClick={toggleReplyForm}
+              type="submit"
+              className="button-emoji reply-button"
+            >
               Reply
             </button>
             <button
