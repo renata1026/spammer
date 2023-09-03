@@ -1,28 +1,29 @@
-import React, { useState } from 'react';
+import React from 'react';
 import EditMessage from './EditMessage';
 import LikeMessage from './LikeMessage';
 import DeleteMessage from './DeleteMessage';
 import PostMessage from './PostMessage';
 import ReplyMessage from './ReplyMessage';
+import { useEffect, useState } from 'react';
 
 import { API } from '../api';
 
 const MessageList = ({ messageData, fetchMessageData }) => {
-  const [replyingMessageId, setReplyingMessageId] = useState(null);
-
-  const handleReply = (parentId, replyId) => {
-    // Set the replying message ID when a reply button is clicked
-    setReplyingMessageId(parentId);
-  };
-
+  // Reverse the order of messageData to display newest messages first
+  const [sortedMessages, setSortedMessages] = useState([]);
+  useEffect(() => {
+    if (messageData) {
+      const sortedData = messageData
+        .slice()
+        .sort((a, b) => Number(b.id) - Number(a.id));
+      setSortedMessages(sortedData);
+    }
+  }, [messageData]);
   return (
     <div className="wrapper">
       <div className="chat-container">
-        {messageData.map((message) => (
-          <div
-            key={message.id}
-            className={`message ${message.isSender ? 'sender' : 'receiver'}`}
-          >
+        {sortedMessages.map((message) => (
+          <div key={message.id} className="message">
             <div className="message-container">
               <div className="flex-container">
                 <EditMessage
@@ -43,19 +44,9 @@ const MessageList = ({ messageData, fetchMessageData }) => {
                 <ReplyMessage
                   fetchMessageData={fetchMessageData}
                   parentId={message.id}
-                  onReply={() => handleReply(message.id)}
                 />
               </div>
             </div>
-
-            {/* Render nested reply container if replyingMessageId matches */}
-            {message.id === replyingMessageId && (
-              <ReplyMessage
-                fetchMessageData={fetchMessageData}
-                parentId={message.id}
-                onReply={() => handleReply(message.id)}
-              />
-            )}
           </div>
         ))}
       </div>

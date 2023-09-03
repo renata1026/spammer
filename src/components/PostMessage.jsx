@@ -44,7 +44,7 @@ const PostMessage = () => {
     <div>
       <Message fetchMessageData={fetchMessageData} />
       <MessageList
-        messageData={messageData}
+        messageData={sortedMessages}
         fetchMessageData={fetchMessageData}
       />
     </div>
