@@ -19,10 +19,12 @@ const MessageList = ({ messageData, fetchMessageData }) => {
       setSortedMessages(sortedData);
     }
   }, [messageData]);
+  // Slice the sortedMessages array to include only the first 10 comments
+  const limitedMessages = sortedMessages.slice(0, 10);
   return (
     <div className="wrapper">
       <div className="chat-container">
-        {sortedMessages.map((message) => (
+        {limitedMessages.map((message) => (
           <div key={message.id} className="message">
             <div className="message-container">
               <div className="flex-container">

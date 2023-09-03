@@ -84,7 +84,9 @@ const ReplyMessage = ({ fetchMessageData }) => {
         {replies.map((reply) => (
           <div
             key={reply.id}
-            className={`reply-message ${background ? '' : 'reply-background'}`}
+            className={`reply-message ${
+              background ? 'none' : 'reply-background'
+            }`}
           >
             <p>{reply.text}</p>
           </div>
