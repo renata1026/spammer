@@ -134,3 +134,29 @@ input:focus {
 .none {
   display: none;
 }
+
+/* Media query for screens with a maximum width of 768 pixels (mobile devices) */
+@media (max-width: 768px) {
+  .wrapper {
+    margin: 0 auto;
+  }
+  .post-button {
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+  }
+
+  .flex-container,
+  .reply-form {
+    flex-direction: column;
+    align-items: center;
+  }
+  .reply-container,
+  .button-emoji {
+    margin: 0;
+  }
+
+  .reply-form {
+    gap: 10px;
+  }
+}
