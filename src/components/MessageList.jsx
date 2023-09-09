@@ -1,11 +1,9 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import EditMessage from './EditMessage';
 import LikeMessage from './LikeMessage';
 import DeleteMessage from './DeleteMessage';
 import PostMessage from './PostMessage';
 import ReplyMessage from './ReplyMessage';
-import { useEffect, useState } from 'react';
-
 import { API } from '../api';
 
 const MessageList = ({ messageData, fetchMessageData }) => {
@@ -43,10 +41,7 @@ const MessageList = ({ messageData, fetchMessageData }) => {
                   messageId={message.id}
                   fetchMessageData={fetchMessageData}
                 />
-                <ReplyMessage
-                  fetchMessageData={fetchMessageData}
-                  parentId={message.id}
-                />
+                <ReplyMessage fetchMessageData={fetchMessageData} />
               </div>
             </div>
           </div>

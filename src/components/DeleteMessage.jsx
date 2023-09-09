@@ -7,7 +7,7 @@ const DeleteMessage = ({ messageId, fetchMessageData }) => {
 
   const handleDelete = async () => {
     setIsDeleting(true);
-    const response = await fetch(`${API}/message/${messageId}`, {
+    const response = await fetch(`${API}/messages/${messageId}`, {
       method: 'DELETE',
     });
     const info = await response.json();

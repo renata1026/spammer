@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { API } from '../api';
 
-const ReplyMessage = ({ fetchMessageData }) => {
+const ReplyMessage = ({ messageId, fetchMessageData }) => {
   const [reply, setReply] = useState('');
   const [replies, setReplies] = useState([]);
   const [isReplying, setIsReplying] = useState(false);
@@ -79,8 +79,7 @@ const ReplyMessage = ({ fetchMessageData }) => {
             </button>
           </form>
         ) : null}
-
-        {/* Render reply messages */}
+        {/* /*Render reply messages */}
         {replies.map((reply) => (
           <div
             key={reply.id}

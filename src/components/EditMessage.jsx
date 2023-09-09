@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { API } from '../api';
-import MessageList from './MessageList';
 
 const EditMessage = ({ fetchMessageData, message }) => {
   const [editedText, setEditedText] = useState(message.text);
@@ -10,9 +9,10 @@ const EditMessage = ({ fetchMessageData, message }) => {
     setEditedText(e.target.value); // Update the editedText state as the user types
   };
 
-  const handleEditClick = async () => {
+  const handleEditClick = async (e) => {
+    e.preventDefault();
     console.log('Edited Text:', editedText); // Check if editedText is correct
-    const response = await fetch(`${API}/message/${message.id}`, {
+    const response = await fetch(`${API}/messages/${message.id}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -28,36 +28,45 @@ const EditMessage = ({ fetchMessageData, message }) => {
       console.log('Edit Success'); // Check if this block is being executed
       fetchMessageData();
       setIsEditing(false);
+    } else {
+      console.error('Edit Failed:', info.error); // Log an error message if the edit fails
     }
   };
 
   const handleCancelClick = () => {
     setIsEditing(false); // Close the edit mode on cancel
+    setEditedText(message.text); // Revert editedText to the original message text
+    console.log('Canceled Editing'); // Log a message when editing is canceled
   };
 
   const toggleEdit = () => {
-    setIsEditing(!isEditing);
+    setIsEditing(!isEditing); // Toggle the isEditing state
+    console.log('Toggled Edit Mode'); // Log a message when edit mode is toggled
   };
 
   return (
     <div className="flex-container">
       {isEditing ? (
-        <>
+        <form onSubmit={handleEditClick} className="edit-form">
           <input type="text" value={editedText} onChange={handleEditChange} />
-          <button onClick={handleEditClick} className="button-emoji button">
-            Edit
+          <button type="submit" className="button-emoji button">
+            Submit
           </button>
-          <button onClick={handleCancelClick} className="button-emoji button">
+          <button
+            type="button"
+            onClick={handleCancelClick}
+            className="button-emoji button"
+          >
             Cancel
           </button>
-        </>
+        </form>
       ) : (
-        <>
-          <p>{message.text}</p>
+        <div>
+          <p>{editedText}</p>
           <button className="button-emoji" onClick={toggleEdit}>
             ✏️
           </button>
-        </>
+        </div>
       )}
     </div>
   );
