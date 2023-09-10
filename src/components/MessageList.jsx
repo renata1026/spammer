@@ -11,11 +11,11 @@ const MessageList = ({ messageData, fetchMessageData }) => {
   const [sortedMessages, setSortedMessages] = useState([]);
   useEffect(() => {
     if (messageData) {
+        console.log(messageData)
       const sortedData = messageData
-        .slice()
-        .filter((message) => message.isChild === false ).sort((a, b) => a.text.localeCompare(b.text));
+        .sort((a, b) => a.text.localeCompare(b.text));
       setSortedMessages(sortedData);
-    console.log(sortedData);
+        console.log(sortedData);
 
     }
   }, [messageData]);

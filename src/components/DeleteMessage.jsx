@@ -13,7 +13,7 @@ const DeleteMessage = ({
   const handleDelete = async () => {
     console.log(messageId);
     setIsDeleting(true);
-    console.log(parentId);
+
 
     const response = await fetch(`${API}/messages/${messageId}`, {
       method: 'POST',
@@ -27,6 +27,8 @@ const DeleteMessage = ({
     fetchMessageData();
 
     setIsDeleting(false);
+console.log(messageId)
+
     if (onChildDeleted) {
       onChildDeleted(messageId);
     }

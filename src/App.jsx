@@ -12,6 +12,7 @@ const App = () => {
     try {
       const response = await fetch(`${API}/messages`);
       const info = await response.json();
+        console.log(info)
       setMessageData(info.messages);
     } catch (error) {
       console.error('Error fetching messages:', error);
