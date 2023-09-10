@@ -1,9 +1,32 @@
 import React, { useState } from 'react';
 import { API } from '../api';
+import EditMessage from './EditMessage';
+import LikeMessage from './LikeMessage';
+import DeleteMessage from './DeleteMessage';
 
-const ReplyMessage = ({ messageId, fetchMessageData }) => {
+const ReplyMessage = ({ parentId, fetchMessageData, childs }) => {
+  const filteredChilds = childs.filter((child) => child.isDeleted === false);
   const [reply, setReply] = useState('');
-  const [replies, setReplies] = useState([]);
+
+  const onDeleted = (id) => {
+    const updatedChilds = childs.map((child) => {
+      console.log(child.id, id);
+      if (child.id === id) {
+        return {
+          ...child,
+          isDeleted: true,
+        };
+      }
+      return child;
+    });
+
+    console.log(updatedChilds);
+
+    setReplies(updatedChilds.filter((child) => child.isDeleted === false));
+  };
+
+  const [replies, setReplies] = useState(filteredChilds);
+
   const [isReplying, setIsReplying] = useState(false);
   const [background, setBackground] = useState(false);
 
@@ -26,23 +49,18 @@ const ReplyMessage = ({ messageId, fetchMessageData }) => {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ text: reply }),
+      body: JSON.stringify({ text: reply, parentId }),
     });
 
     const info = await response.json();
-    console.log(info);
-    if (info.success) {
-      // Fetch updated message data after posting the reply
-      fetchMessageData();
-      // Reset the reply input
-      setReply('');
 
-      // Add the new reply to the replies array
-      setReplies((prevReplies) => [
-        ...prevReplies,
-        { id: info.id, text: reply },
-      ]);
-    }
+    // Fetch updated message data after posting the reply
+    fetchMessageData();
+    // Reset the reply input
+    setReply('');
+
+    // Add the new reply to the replies array
+    setReplies((prevReplies) => [...prevReplies, { id: info.id, text: reply }]);
   };
 
   return (
@@ -80,14 +98,29 @@ const ReplyMessage = ({ messageId, fetchMessageData }) => {
           </form>
         ) : null}
         {/* /*Render reply messages */}
-        {replies.map((reply) => (
-          <div
-            key={reply.id}
-            className={`reply-message ${
-              background ? 'none' : 'reply-background'
-            }`}
-          >
-            <p>{reply.text}</p>
+        {replies?.map((message) => (
+          <div key={message.id} className="message">
+            <div className="message-container">
+              <div className="flex-container">
+                <EditMessage
+                  message={message}
+                  fetchMessageData={fetchMessageData}
+                />
+              </div>
+
+              <div className="icon-container">
+                <LikeMessage
+                  messageId={message.id}
+                  fetchMessageData={fetchMessageData}
+                />
+                <DeleteMessage
+                  messageId={message.id}
+                  parentId={parentId}
+                  onChildDeleted={onDeleted}
+                  fetchMessageData={fetchMessageData}
+                />
+              </div>
+            </div>
           </div>
         ))}
       </div>

@@ -1,1 +1,1 @@
-export const API = 'https://github-spammer-backend.onrender.com';
+export const API = 'http://localhost:3001';

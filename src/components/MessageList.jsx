@@ -13,8 +13,10 @@ const MessageList = ({ messageData, fetchMessageData }) => {
     if (messageData) {
       const sortedData = messageData
         .slice()
-        .sort((a, b) => Number(b.id) - Number(a.id));
+        .filter((message) => message.isChild === false ).sort((a, b) => a.text.localeCompare(b.text));
       setSortedMessages(sortedData);
+    console.log(sortedData);
+
     }
   }, [messageData]);
   // Slice the sortedMessages array to include only the first 10 comments
@@ -23,6 +25,7 @@ const MessageList = ({ messageData, fetchMessageData }) => {
     <div className="wrapper">
       <div className="chat-container">
         {limitedMessages.map((message) => (
+
           <div key={message.id} className="message">
             <div className="message-container">
               <div className="flex-container">
@@ -41,7 +44,11 @@ const MessageList = ({ messageData, fetchMessageData }) => {
                   messageId={message.id}
                   fetchMessageData={fetchMessageData}
                 />
-                <ReplyMessage fetchMessageData={fetchMessageData} />
+                <ReplyMessage
+                  fetchMessageData={fetchMessageData}
+                  parentId={message.id}
+                  childs={message.children}
+                />
               </div>
             </div>
           </div>
