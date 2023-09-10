@@ -58,7 +58,7 @@ const ReplyMessage = ({ parentId, fetchMessageData, childs }) => {
     fetchMessageData();
     // Reset the reply input
     setReply('');
-console.log(info, 'info')
+    console.log(info, 'info');
 
     // Add the new reply to the replies array
     setReplies((prevReplies) => [...prevReplies, { id: info.id, text: reply }]);
