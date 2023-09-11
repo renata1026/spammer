@@ -11,22 +11,19 @@ const Message = ({ fetchMessageData }) => {
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
-    try {
-      const response = await fetch(`${API}/messages`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ text: inputValue }),
-      });
 
-      const info = await response.json();
-      if (info.success) {
-        fetchMessageData();
-        setInputValue('');
-      }
-    } catch (error) {
-      console.error('Error posting new message:', error);
+    const response = await fetch(`${API}/messages`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ text: inputValue }),
+    });
+
+    const info = await response.json();
+    if (info.success) {
+      fetchMessageData();
+      setInputValue('');
     }
   };
 

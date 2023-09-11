@@ -11,12 +11,10 @@ const MessageList = ({ messageData, fetchMessageData }) => {
   const [sortedMessages, setSortedMessages] = useState([]);
   useEffect(() => {
     if (messageData) {
-        console.log(messageData)
-      const sortedData = messageData
-        .sort((a, b) => a.text.localeCompare(b.text));
+      const sortedData = messageData.sort((a, b) =>
+        a.text.localeCompare(b.text)
+      );
       setSortedMessages(sortedData);
-        console.log(sortedData);
-
     }
   }, [messageData]);
   // Slice the sortedMessages array to include only the first 10 comments
@@ -25,7 +23,6 @@ const MessageList = ({ messageData, fetchMessageData }) => {
     <div className="wrapper">
       <div className="chat-container">
         {limitedMessages.map((message) => (
-
           <div key={message.id} className="message">
             <div className="message-container">
               <div className="flex-container">
@@ -47,7 +44,7 @@ const MessageList = ({ messageData, fetchMessageData }) => {
                 <ReplyMessage
                   fetchMessageData={fetchMessageData}
                   parentId={message.id}
-                  childs={message.children}
+                  children={message.children}
                 />
               </div>
             </div>

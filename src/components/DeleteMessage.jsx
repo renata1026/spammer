@@ -1,6 +1,8 @@
 // DeleteMessage.js
 import React, { useState } from 'react';
 import { API } from '../api';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTrashCan } from '@fortawesome/free-solid-svg-icons';
 
 const DeleteMessage = ({
   messageId,
@@ -11,9 +13,7 @@ const DeleteMessage = ({
   const [isDeleting, setIsDeleting] = useState(false);
 
   const handleDelete = async () => {
-    console.log(messageId);
     setIsDeleting(true);
-
 
     const response = await fetch(`${API}/messages/${messageId}`, {
       method: 'POST',
@@ -27,7 +27,6 @@ const DeleteMessage = ({
     fetchMessageData();
 
     setIsDeleting(false);
-console.log(messageId)
 
     if (onChildDeleted) {
       onChildDeleted(messageId);
@@ -40,7 +39,7 @@ console.log(messageId)
       className="button-emoji"
       disabled={isDeleting}
     >
-      🗑️
+      <FontAwesomeIcon icon={faTrashCan} />
     </button>
   );
 };

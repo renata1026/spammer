@@ -3,14 +3,18 @@ import { API } from '../api';
 import EditMessage from './EditMessage';
 import LikeMessage from './LikeMessage';
 import DeleteMessage from './DeleteMessage';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faReply } from '@fortawesome/free-solid-svg-icons';
 
-const ReplyMessage = ({ parentId, fetchMessageData, childs }) => {
-  const filteredChilds = childs.filter((child) => child.isDeleted === false);
+const ReplyMessage = ({ parentId, fetchMessageData, children }) => {
+  //filtering children that are not deleted
+  const filteredChildren = children.filter(
+    (child) => child.isDeleted === false
+  );
   const [reply, setReply] = useState('');
 
   const onDeleted = (id) => {
-    const updatedChilds = childs.map((child) => {
-      console.log(child.id, id);
+    const updatedChildren = children.map((child) => {
       if (child.id === id) {
         return {
           ...child,
@@ -19,23 +23,18 @@ const ReplyMessage = ({ parentId, fetchMessageData, childs }) => {
       }
       return child;
     });
-
-    console.log(updatedChilds);
-
-    setReplies(updatedChilds.filter((child) => child.isDeleted === false));
+    //selects only the children that are not deleted
+    setReplies(updatedChildren.filter((child) => child.isDeleted === false));
   };
 
-  const [replies, setReplies] = useState(filteredChilds);
-
+  const [replies, setReplies] = useState(filteredChildren);
   const [isReplying, setIsReplying] = useState(false);
-  const [background, setBackground] = useState(false);
 
   const handleReplyOnChange = (e) => {
     setReply(e.target.value);
   };
 
   const toggleReplyForm = () => {
-    setBackground(!background);
     setIsReplying(!isReplying);
   };
 
@@ -58,21 +57,24 @@ const ReplyMessage = ({ parentId, fetchMessageData, childs }) => {
     fetchMessageData();
     // Reset the reply input
     setReply('');
-    console.log(info, 'info');
 
     // Add the new reply to the replies array
     setReplies((prevReplies) => [...prevReplies, { id: info.id, text: reply }]);
   };
 
   return (
-    <div className="reply-container">
+    <div
+      className={`reply-container ${
+        replies.length > 0 ? 'has-replies-background' : ''
+      }`}
+    >
       <div className="reply-content">
         <button
           style={{ display: isReplying ? 'none' : 'block' }}
           onClick={toggleReplyForm}
           className="button-emoji"
         >
-          ↩️
+          <FontAwesomeIcon icon={faReply} />
         </button>
         {isReplying ? (
           <form onSubmit={handleFormReplySubmit} className="reply-form">

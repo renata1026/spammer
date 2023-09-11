@@ -14,25 +14,20 @@ const PostMessage = () => {
   };
 
   const handleNewMessage = async (newMessage) => {
-    try {
-      const response = await fetch(`${API}/messages`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ text: newMessage }),
-      });
-      const info = await response.json();
-      console.log(info);
-      if (info.success) {
-        // Update the messageData state to include the new message
-        setMessageData((prevMessageData) => [
-          ...prevMessageData,
-          { id: info.id, text: newMessage },
-        ]);
-      }
-    } catch (error) {
-      console.error('Error posting new message:', error);
+    const response = await fetch(`${API}/messages`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ text: newMessage }),
+    });
+    const info = await response.json();
+    if (info.success) {
+      // Update the messageData state to include the new message
+      setMessageData((prevMessageData) => [
+        ...prevMessageData,
+        { id: info.id, text: newMessage },
+      ]);
     }
   };
 

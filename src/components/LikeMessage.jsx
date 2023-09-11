@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { API } from '../api';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faHeart } from '@fortawesome/free-solid-svg-icons';
 
 const LikeMessage = ({ messageId, fetchMessageData }) => {
   const [likeCount, setLikeCount] = useState(0);
@@ -21,18 +23,16 @@ const LikeMessage = ({ messageId, fetchMessageData }) => {
     const info = await response.json();
 
     if (info.success) {
-      console.log('Like Success'); // Check if this block is being executed
       fetchMessageData();
       setLikeCount(newLikeCount); // Update likeCount in the component's state
-    } else {
-      console.error('Like Failed:', info.error); // Log an error message if the like fails
     }
   };
 
   return (
     <div>
       <button onClick={handleLikes} className="button-emoji">
-        👍{likeCount}
+        <FontAwesomeIcon icon={faHeart} style={{ marginRight: '10px' }} />
+        {likeCount}
       </button>
     </div>
   );
